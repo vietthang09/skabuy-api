@@ -13,7 +13,6 @@ app.use("/user", require("./Route/User.route"));
 app.use("/comment", require("./Route/Comment.route"));
 app.use("/order", require("./Route/Order.route"));
 app.use("/voucher", require("./Route/Voucher.route"));
-app.use("/payment", require("./Route/Payment.route"));
 app.use("/uploads", require("./Route/upload.route"));
 app.use("/auth", require("./Route/Authentication.route"));
 app.use("/wishlist", require("./Route/Wishlist.route"));
