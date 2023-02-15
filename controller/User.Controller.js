@@ -204,14 +204,14 @@ module.exports.login = (req, res) => {
             message: "Incorrect password",
           });
         } else {
-          const token = jwt.sign(
-            { user_id: rows[0].user_id },
-            process.env.SECRECT,
-            { expiresIn: "1h" }
-          );
+          // const token = jwt.sign(
+          //   { user_id: rows[0].user_id },
+          //   process.env.SECRECT,
+          //   { expiresIn: "1h" }
+          // );
           return res.json({
             message: "Success",
-            token: token,
+            // token: token,
             data: rows[0],
           });
         }

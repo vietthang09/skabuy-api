@@ -3,10 +3,9 @@ const cors = require("cors");
 const bodyparser = require("body-parser");
 require("dotenv").config();
 
-let app = express();
-app.use(cors());
-app.options('*', cors());
-
+var app = express();
+app.use(express.json());
+app.use(cors("*"));
 
 app.use("/shop", require("./Route/Shop.route"));
 app.use("/user", require("./Route/User.route"));
