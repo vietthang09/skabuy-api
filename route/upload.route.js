@@ -1,31 +1,18 @@
-var express = require("express");
-var router = express.Router();
-var UploadController = require("../Controller/upload.controller");
+const express = require("express");
+const router = express.Router();
+const fileUploader = require("../controller/upload.controller");
 
 router.post(
-  "/category",
-  UploadController.uploadImageCategory.single("image"),
-  UploadController.uploadImage,
-  (error, req, res, next) => {
-    res.status(400).json({ error: error.message });
+  "/cloudinary-upload",
+  fileUploader.single("image"),
+  (req, res, next) => {
+    if (!req.file) {
+      next(new Error("No file uploaded!"));
+      return;
+    }
+
+    res.json({ secure_url: req.file.path });
   }
 );
-// For Single image upload
-router.post(
-  "/product-image",
-  UploadController.imageUploadProduct.single("image"),
-  UploadController.uploadImage,
-  (error, req, res, next) => {
-    res.status(400).json({ error: error.message });
-  }
-);
-// For Single image upload
-router.post(
-  "/product-images",
-  UploadController.imageUploadProductDescription.single("image"),
-  UploadController.uploadImage,
-  (error, req, res, next) => {
-    res.status(400).json({ error: error.message });
-  }
-);
+
 module.exports = router;

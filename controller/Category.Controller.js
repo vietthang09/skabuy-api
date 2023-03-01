@@ -12,17 +12,8 @@ module.exports.create = (req, res) => {
   });
 };
 // READ
-module.exports.getAll = (req, res) => {
-
-  db.query(`SELECT
-              category.category_id,
-              category.category_name,
-              category.category_slug,
-              category.category_image,
-              COUNT(product.product_id) AS quantity
-            FROM category
-            INNER JOIN product ON product.category_id = category.category_id
-            GROUP BY category.category_id`, (err, result) => {
+module.exports.all = (req, res) => {
+  db.query(`SELECT * FROM category`, (err, result) => {
     sendResponse(res, err, result);
   });
 };
