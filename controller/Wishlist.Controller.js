@@ -66,11 +66,7 @@ module.exports.getAllByUserId = (req, res) => {
 // UPDATE
 // DELETE
 module.exports.delete = (req, res) => {
-  const { data } = req.body;
-  var deleteStatement = `
-        DELETE FROM wishlist
-        WHERE wishlist_id = '${data.id}'
-    `;
+  var deleteStatement = "TRUNCATE wishlist";
   db.query(deleteStatement, (err, result) => {
     var message = null;
     if (err) {
