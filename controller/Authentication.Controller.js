@@ -16,7 +16,7 @@ module.exports.generatePinCode = (req, res) => {
   db.query(sql, function (err, result) {
     sendResponse(res, err, result);
     var htmlBody = sendPinTemplate(randomPin);
-    sendMail(user_email, "[HLE Ecommerce] Email verification", htmlBody);
+    sendMail(user_email, "[SKA Buy] Email verification", htmlBody);
   });
 };
 
@@ -33,7 +33,7 @@ module.exports.verifyEmail = (req, res) => {
       var htmlBody = emailVerificationSuccessfulTemplate();
       sendMail(
         user_email,
-        "[HLE Ecommerce] Email verification successful",
+        "[SKA Buy] Email verification successful",
         htmlBody
       );
     }

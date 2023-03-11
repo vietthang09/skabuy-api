@@ -84,15 +84,11 @@ module.exports.postOrder = (req, res) => {
         address,
         voucher ? voucher.discount : null,
         total_price,
-        method_payment == 0
-          ? "Cash on delivery"
-          : method_payment == 1
-          ? "Pay with Paypal"
-          : "Pay with VNPay",
+        method_payment == 0 ? "Pay with Paypal" : "Pay with Stripe",
         created_at
       );
       if (method_payment == 0 || method_payment == 1) {
-        sendMail(email, "[HLE Ecommerce] Order successful", htmlBody);
+        sendMail(email, "[SKA Buy] Order successful", htmlBody);
         dataProduct.map((item) => {
           var updateStatement = `
           UPDATE characteristics_product
