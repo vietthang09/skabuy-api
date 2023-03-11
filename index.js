@@ -1,6 +1,5 @@
 const express = require("express");
 const cors = require("cors");
-const bodyparser = require("body-parser");
 require("dotenv").config();
 
 var app = express();
@@ -19,10 +18,12 @@ app.use("/attribute", require("./Route/Attribute.route"));
 app.use("/product", require("./Route/Product.route"));
 app.use("/category", require("./Route/Category.route"));
 app.use("/characteristic", require("./Route/Characteristic.route"));
+
 app.use(
   "/characteristic-product",
   require("./Route/CharacteristicProduct.route")
 );
+app.use("/payment", require("./Route/Payment.route"));
 
 app.listen(5000, () => {
   console.log("App listening on port 5000");

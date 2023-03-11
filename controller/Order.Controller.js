@@ -18,7 +18,6 @@ module.exports.postOrder = (req, res) => {
     address,
     total_price,
     method_payment,
-    message,
     voucher,
   } = req.body;
 
@@ -47,14 +46,13 @@ module.exports.postOrder = (req, res) => {
     total_price,
     voucher ? voucher.id : null,
     method_payment,
-    message,
     status,
     created_at,
     update_at,
   ];
 
   const sql_Order =
-    "INSERT INTO `orders` (`order_id`,`user_id`, `fullname`,`email`,`phonenumber`,`address`,`total_price`,`voucher_id`,`method_payment`,`message`,`status`,`created_at`,`update_at`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    "INSERT INTO `orders` (`order_id`,`user_id`, `fullname`,`email`,`phonenumber`,`address`,`total_price`,`voucher_id`,`method_payment`,`status`,`created_at`,`update_at`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
   db.query(sql_Order, values, (err, rows, fields) => {
     if (err) {
       console.log(err);

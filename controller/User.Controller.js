@@ -223,65 +223,28 @@ module.exports.login = (req, res) => {
 };
 
 module.exports.register = (req, res) => {
-  try {
-    const {
-      user_email,
-      password,
-      user_fullname,
-      user_phone_number,
-      user_gender,
-      user_date_of_birth,
-      user_address,
-      user_rule,
-    } = req.body;
-    const status = 2;
+  const { email, password, fullname } = req.body;
 
-    const sql = "SELECT * FROM user WHERE user_email = ? ";
-    db.query(sql, [user_email], async (err, rows, fields) => {
-      //Check email exist ?
-      if (rows.length > 0) {
-        return res.json({
-          message: "The E-mail already in use",
-        });
-      } else if (
-        user_email === "" ||
-        password === "" ||
-        user_fullname === "" ||
-        user_gender === "" ||
-        user_address === ""
-      ) {
-        return res.json({
-          message: "You are filling in missing information!!",
-        });
-      }
-      //create password with code bcrypt
-      const hashPass = await bcrypt.hash(password, 12);
-      const sqlRegister =
-        "INSERT INTO `user`(`user_email`,`password`,`user_fullname`,`user_phone_number`,`user_gender`,`user_date_of_birth`,`user_address`,`user_rule`,`status`) VALUES(?,?,?,?,?,?,?,?,?)";
-      db.query(
-        sqlRegister,
-        [
-          user_email,
-          hashPass,
-          user_fullname,
-          user_phone_number,
-          user_gender,
-          user_date_of_birth,
-          user_address,
-          user_rule,
-          status,
-        ],
-        (err, rows, fields) => {
-          if (err) {
-            return res.json({ message: err });
-          }
-          return res.json({
-            message: "The user has been successfully inserted.",
-          });
+  // check valid email
+  const selectStatement = "SELECT * FROM user WHERE user_email = ? ";
+  db.query(selectStatement, [email], async (err, rows, fields) => {
+    if (rows.length > 0) {
+      return sendResponse(res, "Your email is not valid!", rows);
+    }
+
+    //create password with code bcrypt
+    const hashPass = await bcrypt.hash(password, 12);
+    const insertStatement =
+      "INSERT INTO `user`(`user_email`,`password`,`user_fullname`) VALUES(?,?,?)";
+    db.query(
+      insertStatement,
+      [email, hashPass, fullname],
+      (err, rows, fields) => {
+        if (err) {
+          return sendResponse(res, err, rows);
         }
-      );
-    });
-  } catch (error) {
-    return res.json({ message: err.message });
-  }
+        return sendResponse(res, null, rows);
+      }
+    );
+  });
 };
